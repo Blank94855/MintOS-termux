@@ -246,7 +246,7 @@ case "$1" in
         ;;
     *)
         if [[ -f "$SETUP_COMPLETE_FILE" ]]; then
-            print_message "$Green" "You are using the latest version!"
+            print_message "$Green" "Updated system to the latest version!"
         else
             run_initial_setup
         fi
