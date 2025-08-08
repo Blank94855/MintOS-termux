@@ -1,5 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
+# Define color codes for a more vibrant output
 Color_Off='\033[0m'
 Red='\033[0;31m'
 Green='\033[1;32m'
@@ -8,22 +9,26 @@ Yellow='\033[1;33m'
 Purple='\033[0;35m'
 Cyan='\033[0;36m'
 
+# Define paths for configuration files and a version constant
 CONFIG_FISH_PATH="$PREFIX/etc/fish/config.fish"
 NEOFETCH_CONFIG_DIR="$HOME/.config/neofetch"
 NEOFETCH_CONFIG_FILE="$NEOFETCH_CONFIG_DIR/config.conf"
 SCRIPT_VERSION="1.1.1"
 SETUP_COMPLETE_FILE="$HOME/.mintos_setup_complete"
 
+# Function to print colored messages
 print_message() {
     local color="$1"
     local message="$2"
     echo -e "${color}${message}${Color_Off}"
 }
 
+# Function to check if a command exists in the system's PATH
 command_exists() {
     type -p "$1" &>/dev/null
 }
 
+# Function to display system information and changelog
 show_system_info() {
     print_message "$Purple" "--- MintOS Software Update Utility ---"
     echo ""
@@ -38,6 +43,9 @@ show_system_info() {
     echo ""
     print_message "$Purple" "--------------------------------------"
 }
+
+# The following functions contain the original setup logic from the user's script
+# They are now called only on the first run of the script.
 
 check_dependencies() {
     print_message "$Yellow" "Updating package lists..."
@@ -111,6 +119,7 @@ configure_banner_and_greeting() {
         banner_command="figlet -f \"$banner_font\" \"$banner_text\""
     fi
 
+    # Write the fish configuration using correct fish shell syntax
     cat > "$CONFIG_FISH_PATH" <<- EOF
 # --- MintOS Fish Configuration v$SCRIPT_VERSION ---
 
@@ -148,10 +157,9 @@ function fish_greeting
 end
 
 # --- Core Aliases ---
-set SCRIPT_PATH (dirname (realpath (status --current-filename)))
 alias updateme="pkg update -y && pkg upgrade -y && echo -e '${Green}System updated successfully!${Color_Off}'"
 alias myaliases="echo -e '${Purple}--- Your Custom Aliases (v$SCRIPT_VERSION) ---${Color_Off}'; grep -E '^alias ' '$CONFIG_FISH_PATH' | grep -vE '^alias updateme|^alias myaliases|^alias software-update|^# User Defined Aliases Start'; echo -e '${Purple}-------------------------${Color_Off}'"
-alias software-update="bash \$SCRIPT_PATH/$(basename (status --current-filename)) --software-update"
+alias software-update="bash /data/data/com.termux/files/home/MintOS-termux/setup.sh --software-update"
 
 # --- User Defined Aliases Start ---
 
