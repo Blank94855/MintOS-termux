@@ -1,5 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
+# Define color codes for a more vibrant output
 Color_Off='\033[0m'
 Red='\033[0;31m'
 Green='\033[1;32m'
@@ -8,36 +9,44 @@ Yellow='\033[1;33m'
 Purple='\033[0;35m'
 Cyan='\033[0;36m'
 
+# Define paths for configuration files and a version constant
 CONFIG_FISH_PATH="$PREFIX/etc/fish/config.fish"
 NEOFETCH_CONFIG_DIR="$HOME/.config/neofetch"
 NEOFETCH_CONFIG_FILE="$NEOFETCH_CONFIG_DIR/config.conf"
-SCRIPT_VERSION="1.1.2"
+SCRIPT_VERSION="1.1.3"
 SETUP_COMPLETE_FILE="$HOME/.mintos_setup_complete"
 
+# Function to print colored messages
 print_message() {
     local color="$1"
     local message="$2"
     echo -e "${color}${message}${Color_Off}"
 }
 
+# Function to check if a command exists in the system's PATH
 command_exists() {
     type -p "$1" &>/dev/null
 }
 
+# Function to display system information and changelog
 show_system_info() {
     print_message "$Purple" "--- MintOS Software Update Utility ---"
     echo ""
     print_message "$Yellow" "System Information:"
-    echo "  ${Cyan}OS Version:${Color_Off} MintOS 1.1.2"
-    echo "  ${Cyan}Security Patch:${Color_Off} 1 August 2025"
+    echo -e "  ${Cyan}OS Version:${Color_Off} MintOS 1.1.3"
+    echo -e "  ${Cyan}Security Patch:${Color_Off} 1 August 2025"
     echo ""
     print_message "$Yellow" "Changelog:"
-    echo "  ${Green}*${Color_Off} Fixed the 'software-update' command pathing issue."
-    echo "  ${Green}*${Color_Off} Added more robust error handling for dependencies."
-    echo "  ${Green}*${Color_Off} Updated the core 'updateme' alias for stability."
+    echo -e "  ${Green}*${Color_Off} Fixed the 'software-update' command pathing issue."
+    echo -e "  ${Green}*${Color_Off} Added more robust error handling for dependencies."
+    echo -e "  ${Green}*${Color_Off} Updated the core 'updateme' alias for stability."
+    echo -e "  ${Green}*${Color_Off} Fixed the color code formatting for 'software-update' output."
     echo ""
     print_message "$Purple" "--------------------------------------"
 }
+
+# The following functions contain the original setup logic from the user's script
+# They are now called only on the first run of the script.
 
 check_dependencies() {
     print_message "$Yellow" "Updating package lists..."
@@ -243,6 +252,4 @@ case "$1" in
         fi
         ;;
 esac
-
-
 
