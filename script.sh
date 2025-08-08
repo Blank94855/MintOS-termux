@@ -148,10 +148,10 @@ function fish_greeting
 end
 
 # --- Core Aliases ---
-SCRIPT_PATH="$(dirname $(realpath -s $0))/$(basename $0)"
+set SCRIPT_PATH (dirname (realpath (status --current-filename)))
 alias updateme="pkg update -y && pkg upgrade -y && echo -e '${Green}System updated successfully!${Color_Off}'"
 alias myaliases="echo -e '${Purple}--- Your Custom Aliases (v$SCRIPT_VERSION) ---${Color_Off}'; grep -E '^alias ' '$CONFIG_FISH_PATH' | grep -vE '^alias updateme|^alias myaliases|^alias software-update|^# User Defined Aliases Start'; echo -e '${Purple}-------------------------${Color_Off}'"
-alias software-update="bash \"$SCRIPT_PATH\" --software-update"
+alias software-update="bash \$SCRIPT_PATH/$(basename (status --current-filename)) --software-update"
 
 # --- User Defined Aliases Start ---
 
